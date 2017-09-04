@@ -35,7 +35,7 @@ tileset:
 #    - cs # Czech, Latin
 #    - cy # Welsh, Latin
 #    - da # Danish, Latin
-#    - de # German, Latin
+    - de # German, Latin
 #    - el # Greek
     - en # English, Latin
 #    - es # Spanish, Latin
