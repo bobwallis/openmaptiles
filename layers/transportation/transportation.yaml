@@ -47,6 +47,10 @@ layer:
           Mark with `1` whether way is a ramp (link or steps)
           or not with `0`.
       values: [0, 1]
+    layer:
+      description: |
+          Original value of the [`layer`](http://wiki.openstreetmap.org/wiki/Key:layer) tag.
+      values: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
     service:
       description: |
           Original value of the [`service`](http://wiki.openstreetmap.org/wiki/Key:service) tag.
@@ -61,7 +65,7 @@ layer:
   datasource:
     geometry_field: geometry
     srid: 900913
-    query: (SELECT geometry, class, oneway, ramp, brunnel, service FROM layer_transportation(!bbox!, z(!scale_denominator!))) AS t
+    query: (SELECT geometry, class, oneway, ramp, brunnel, layer, service FROM layer_transportation(!bbox!, z(!scale_denominator!))) AS t
 schema:
   - ./class.sql
   - ./update_transportation_merge.sql
