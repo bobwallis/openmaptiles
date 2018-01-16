@@ -32,14 +32,15 @@ $$ LANGUAGE SQL IMMUTABLE;
 CREATE OR REPLACE FUNCTION poi_class(subclass TEXT, mapping_key TEXT)
 RETURNS TEXT AS $$
     SELECT CASE
-        WHEN subclass IN ('accessories','antiques','art','beauty','bed','boutique','camera','carpet','charity','chemist','chocolate','coffee','computer','confectionery','convenience','copyshop','cosmetics','garden_centre','doityourself','erotic','electronics','fabric','florist','furniture','video_games','video','general','gift','hardware','hearing_aids','hifi','ice_cream','interior_decoration','jewelry','kiosk','lamps','mall','massage','motorcycle','mobile_phone','newsagent','optician','outdoor','perfumery','perfume','pet','photo','second_hand','shoes','sports','stationery','tailor','tattoo','ticket','tobacco','toys','travel_agency','watches','weapons','wholesale') THEN 'shop'
+        WHEN subclass IN ('accessories','antiques','art','beauty','bed','boutique','camera','carpet','charity','chemist','chocolate','coffee','computer','confectionery','convenience','copyshop','cosmetics','garden_centre','doityourself','erotic','electronics','fabric','florist','frozen_food','furniture','video_games','video','general','gift','hardware','hearing_aids','hifi','ice_cream','interior_decoration','jewelry','kiosk','lamps','mall','massage','motorcycle','mobile_phone','newsagent','optician','outdoor','perfumery','perfume','pet','photo','second_hand','shoes','sports','stationery','tailor','tattoo','ticket','tobacco','toys','travel_agency','watches','weapons','wholesale') THEN 'shop'
         WHEN subclass IN ('townhall','public_building','courthouse','community_centre') THEN 'town_hall'
         WHEN subclass IN ('golf','golf_course','miniature_golf') THEN 'golf'
         WHEN subclass IN ('fast_food','food_court') THEN 'fast_food'
         WHEN subclass IN ('park','bbq') THEN 'park'
         WHEN subclass IN ('bus_stop','bus_station') THEN 'bus'
-        -- because 'station' might be from both aeroway and railway
         WHEN (subclass='station' AND mapping_key = 'railway') OR subclass IN ('halt', 'tram_stop', 'subway') THEN 'railway'
+        WHEN (subclass='station' AND mapping_key = 'aerialway') THEN 'aerialway'
+        WHEN subclass IN ('subway_entrance','train_station_entrance') THEN 'entrance'
         WHEN subclass IN ('camp_site','caravan_site') THEN 'campsite'
         WHEN subclass IN ('laundry','dry_cleaning') THEN 'laundry'
         WHEN subclass IN ('supermarket','deli','delicatessen','department_store','greengrocer','marketplace') THEN 'grocery'
@@ -54,7 +55,7 @@ RETURNS TEXT AS $$
         WHEN subclass IN ('bar','nightclub') THEN 'bar'
         WHEN subclass IN ('marina','dock') THEN 'harbor'
         WHEN subclass IN ('car','car_repair','taxi') THEN 'car'
-        WHEN subclass IN ('hospital','nursing_home') THEN 'hospital'
+        WHEN subclass IN ('hospital','nursing_home', 'doctors', 'clinic') THEN 'hospital'
         WHEN subclass IN ('grave_yard','cemetery') THEN 'cemetery'
         WHEN subclass IN ('attraction','viewpoint') THEN 'attraction'
         WHEN subclass IN ('biergarten','pub') THEN 'beer'
@@ -63,6 +64,7 @@ RETURNS TEXT AS $$
         WHEN subclass IN ('accessories','antiques','art','artwork','gallery','arts_centre') THEN 'art_gallery'
         WHEN subclass IN ('bag','clothes') THEN 'clothing_store'
         WHEN subclass IN ('swimming_area','swimming') THEN 'swimming'
+        WHEN subclass IN ('castle','ruins') THEN 'castle'
         ELSE subclass
     END;
 $$ LANGUAGE SQL IMMUTABLE;

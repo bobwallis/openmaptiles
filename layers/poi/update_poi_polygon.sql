@@ -18,7 +18,11 @@ BEGIN
   WHERE station = 'subway' and subclass='station';
 
   UPDATE osm_poi_polygon
-  SET tags = slice_language_tags(tags) || get_basic_names(tags, geometry)
+    SET subclass = 'halt'
+    WHERE funicular = 'yes' and subclass='station';
+
+  UPDATE osm_poi_polygon
+  SET tags = update_tags(tags, geometry)
   WHERE COALESCE(tags->'name:latin', tags->'name:nonlatin', tags->'name_int') IS NULL;
 
   ANALYZE osm_poi_polygon;

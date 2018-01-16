@@ -23,6 +23,15 @@ CREATE MATERIALIZED VIEW osm_transportation_name_network AS (
         else hl.ref
       end as ref,
       hl.highway,
+      CASE WHEN highway IN ('footway', 'steps') THEN layer
+          ELSE NULL::int
+      END AS layer,
+      CASE WHEN highway IN ('footway', 'steps') THEN "level"
+          ELSE NULL::int
+      END AS "level",
+      CASE WHEN highway IN ('footway', 'steps') THEN indoor
+          ELSE NULL::boolean
+      END AS indoor,
       ROW_NUMBER() OVER(PARTITION BY hl.osm_id
                                    ORDER BY rm.network_type) AS "rank",
       hl.z_order
@@ -45,6 +54,9 @@ CREATE MATERIALIZED VIEW osm_transportation_name_linestring AS (
             AS "tags",
         ref,
         highway,
+        "level",
+        layer,
+        indoor,
         network_type AS network,
         z_order
     FROM (
@@ -55,13 +67,16 @@ CREATE MATERIALIZED VIEW osm_transportation_name_linestring AS (
           name_de,
           ref,
           highway,
+          "level",
+          layer,
+          indoor,
           network_type,
           min(z_order) AS z_order
       FROM osm_transportation_name_network
       WHERE ("rank"=1 OR "rank" is null)
         AND (name <> '' OR ref <> '')
         AND NULLIF(highway, '') IS NOT NULL
-      group by name, name_en, name_de, ref, highway, network_type
+      group by name, name_en, name_de, ref, highway, "level", layer, indoor, network_type
     ) AS highway_union
 );
 CREATE INDEX IF NOT EXISTS osm_transportation_name_linestring_geometry_idx ON osm_transportation_name_linestring USING gist(geometry);

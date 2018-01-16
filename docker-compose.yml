@@ -13,12 +13,12 @@ services:
      - "5432"
     env_file: .env
   import-natural-earth:
-    image: "openmaptiles/import-natural-earth:1.3"
+    image: "openmaptiles/import-natural-earth:1.4"
     env_file: .env
     networks:
     - postgres_conn
   import-water:
-    image: "openmaptiles/import-water:0.5"
+    image: "openmaptiles/import-water:0.6"
     env_file: .env
     networks:
     - postgres_conn
@@ -28,7 +28,7 @@ services:
     networks:
     - postgres_conn
   import-osm:
-    image: "openmaptiles/import-osm:0.4"
+    image: "openmaptiles/import-osm:0.5"
     env_file: .env
     environment:
       DIFF_MODE: ${DIFF_MODE}
@@ -39,7 +39,7 @@ services:
      - ./build:/mapping
      - cache:/cache
   import-osmborder:
-    image: "openmaptiles/import-osmborder:0.3"
+    image: "openmaptiles/import-osmborder:0.4"
     env_file: .env
     networks:
     - postgres_conn
@@ -68,14 +68,22 @@ services:
      - ./build:/mapping
      - cache:/cache
   import-sql:
-    image: "openmaptiles/import-sql:0.6"
+    image: "openmaptiles/import-sql:0.7"
     env_file: .env
     networks:
     - postgres_conn
     volumes:
      - ./build:/sql
+  import-wikidata:
+    image: "openmaptiles/import-wikidata:0.1"
+    env_file: .env
+    command: import-wikidata
+    networks:
+    - postgres_conn
+    volumes:
+     - ./wikidata:/import
   openmaptiles-tools:
-    image: "openmaptiles/openmaptiles-tools:0.6"
+    image: "openmaptiles/openmaptiles-tools:0.8"
     env_file: .env
     networks:
     - postgres_conn

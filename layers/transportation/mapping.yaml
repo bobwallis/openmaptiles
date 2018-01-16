@@ -1,4 +1,14 @@
 generalized_tables:
+# etldoc: imposm3 -> osm_railway_linestring_gen5
+  railway_linestring_gen5:
+    source: railway_linestring_gen4
+    tolerance: ZRES9
+
+# etldoc: imposm3 -> osm_railway_linestring_gen4
+  railway_linestring_gen4:
+    source: railway_linestring_gen3
+    tolerance: ZRES10
+
 # etldoc: imposm3 -> osm_railway_linestring_gen3
   railway_linestring_gen3:
     source: railway_linestring_gen2
@@ -12,7 +22,22 @@ generalized_tables:
 # etldoc: imposm3 -> osm_railway_linestring_gen1
   railway_linestring_gen1:
     source: railway_linestring
-    sql_filter: railway='rail' AND service=''
+    sql_filter: railway IN ('rail', 'narrow_gauge', 'light_rail') AND service=''
+    tolerance: ZRES13
+
+# etldoc: imposm3 -> osm_aerialway_linestring_gen1
+  aerialway_linestring_gen1:
+    source: aerialway_linestring
+    tolerance: ZRES13
+
+# etldoc: imposm3 -> osm_shipway_linestring_gen2
+  shipway_linestring_gen2:
+    source: shipway_linestring_gen1
+    tolerance: ZRES12
+
+# etldoc: imposm3 -> osm_shipway_linestring_gen1
+  shipway_linestring_gen1:
+    source: shipway_linestring
     tolerance: ZRES13
 
 # etldoc: imposm3 -> osm_highway_linestring_gen2
@@ -62,7 +87,7 @@ ford_field: &ford
 oneway_field: &oneway
   key: oneway
   name: is_oneway
-  type: bool
+  type: direction
 area_field: &area
   name: is_area
   key: area
@@ -74,6 +99,10 @@ service_field: &service
 usage_field: &usage
   key: usage
   name: usage
+  type: string
+public_transport_field: &public_transport
+  key: public_transport
+  name: public_transport
   type: string
 ref_field: &ref
   key: ref
@@ -87,6 +116,14 @@ layer_field: &layer
   key: layer
   name: layer
   type: integer
+level_field: &level
+  key: level
+  name: level
+  type: integer
+indoor_field: &indoor
+  key: indoor
+  name: indoor
+  type: bool
 z_order_field: &z_order
   name: z_order
   type: wayzorder
@@ -107,6 +144,8 @@ tables:
     - *network
     - *z_order
     - *layer
+    - *level
+    - *indoor
     - *name
     - *name_en
     - *name_de
@@ -119,6 +158,7 @@ tables:
     - *area
     - *service
     - *usage
+    - *public_transport
     mapping:
       highway:
       - motorway
@@ -145,6 +185,8 @@ tables:
       - corridor
       - pedestrian
       - steps
+      public_transport:
+      - platform
 
 # etldoc: imposm3 -> osm_railway_linestring
   railway_linestring:
@@ -161,6 +203,8 @@ tables:
     - *network
     - *z_order
     - *layer
+    - *level
+    - *indoor
     - *name
     - *name_en
     - *name_de
@@ -184,6 +228,64 @@ tables:
       - monorail
       - tram
 
+# etldoc: imposm3 -> osm_aerialway_linestring
+  aerialway_linestring:
+    type: linestring
+    fields:
+    - name: osm_id
+      type: id
+    - name: geometry
+      type: geometry
+    - key: aerialway
+      name: aerialway
+      type: string
+    - *z_order
+    - *layer
+    - *name
+    - *name_en
+    - *name_de
+    - *short_name
+    - *tunnel
+    - *bridge
+    - *ramp
+    - *ford
+    - *oneway
+    - *area
+    - *service
+    - *usage
+    mapping:
+      aerialway:
+      - cable_car
+
+# etldoc: imposm3 -> osm_shipway_linestring
+  shipway_linestring:
+    type: linestring
+    fields:
+    - name: osm_id
+      type: id
+    - name: geometry
+      type: geometry
+    - key: route
+      name: shipway
+      type: string
+    - *z_order
+    - *layer
+    - *name
+    - *name_en
+    - *name_de
+    - *short_name
+    - *tunnel
+    - *bridge
+    - *ramp
+    - *ford
+    - *oneway
+    - *area
+    - *service
+    - *usage
+    mapping:
+      route:
+      - ferry
+
 # etldoc: imposm3 -> osm_highway_polygon
   highway_polygon:
     type: polygon
@@ -197,15 +299,24 @@ tables:
       type: string
     - name: z_order
       type: wayzorder
-    - name: layer
-      key: layer
-      type: integer
+    - *layer
+    - *level
+    - *indoor
     - name: is_area
       key: area
       type: bool
+    - *public_transport
     mapping:
       highway:
+      - path
+      - cycleway
+      - bridleway
+      - footway
+      - corridor
       - pedestrian
+      - steps
+      public_transport:
+      - platform
 
 # TODO: Future table for joining networks
 # etldoc: imposm3 -> osm_route_member

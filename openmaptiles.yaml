@@ -13,8 +13,9 @@ tileset:
     - layers/water_name/water_name.yaml
     - layers/transportation_name/transportation_name.yaml
     - layers/place/place.yaml
-#    - layers/housenumber/housenumber.yaml
-#    - layers/poi/poi.yaml
+  #  - layers/housenumber/housenumber.yaml
+  #  - layers/poi/poi.yaml
+    - layers/aerodrome_label/aerodrome_label.yaml
   name: OpenMapTiles_RSW
   version: 3.3.0
   id: openmaptiles_rsw
@@ -35,9 +36,10 @@ tileset:
 #    - cs # Czech, Latin
 #    - cy # Welsh, Latin
 #    - da # Danish, Latin
-    - de # German, Latin
+#    - de # German, Latin
 #    - el # Greek
     - en # English, Latin
+#    - eo # Esperanto, Latin
 #    - es # Spanish, Latin
 #    - et # Estonian, Latin
 #    - fi # Finnish, Latin
