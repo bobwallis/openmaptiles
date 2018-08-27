@@ -28,7 +28,6 @@ indoor INT) AS $$
         CASE WHEN highway_is_link(highway) OR highway = 'steps'
              THEN 1 ELSE is_ramp::int END AS ramp,
         is_oneway::int AS oneway,
-        layer,
         brunnel(is_bridge, is_tunnel, is_ford) AS brunnel,
         NULLIF(service, '') AS service,
         NULLIF(layer, 0) AS layer,

@@ -4,7 +4,7 @@ tileset:
     - layers/waterway/waterway.yaml
     - layers/landcover/landcover.yaml
     - layers/landuse/landuse.yaml
-    - layers/mountain_peak/mountain_peak.yaml
+  #  - layers/mountain_peak/mountain_peak.yaml
     - layers/park/park.yaml
     - layers/boundary/boundary.yaml
     - layers/aeroway/aeroway.yaml
@@ -17,8 +17,8 @@ tileset:
   #  - layers/poi/poi.yaml
     - layers/aerodrome_label/aerodrome_label.yaml
   name: OpenMapTiles_RSW
-  version: 3.3.0
-  id: openmaptiles_rsw
+  version: 3.8.0
+  id: openmaptiles
   description: "Tileset based on OpenMapTiles. http://openmaptiles.org"
   attribution: '<a href="http://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> <a href="http://www.openstreetmap.org/about/" target="_blank">&copy; OpenStreetMap contributors</a>'
   center: [51.75, -1.26, 4]
