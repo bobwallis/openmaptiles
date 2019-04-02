@@ -17,7 +17,7 @@ tileset:
   #  - layers/poi/poi.yaml
     - layers/aerodrome_label/aerodrome_label.yaml
   name: OpenMapTiles_RSW
-  version: 3.8.0
+  version: 3.9.0
   id: openmaptiles
   description: "Tileset based on OpenMapTiles. http://openmaptiles.org"
   attribution: '<a href="http://www.openmaptiles.org/" target="_blank">&copy; OpenMapTiles</a> <a href="http://www.openstreetmap.org/about/" target="_blank">&copy; OpenStreetMap contributors</a>'
