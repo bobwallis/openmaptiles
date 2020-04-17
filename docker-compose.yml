@@ -108,9 +108,9 @@ services:
     - postgres_conn
     env_file: .env
     environment:
-      BBOX: ${BBOX}
-      MIN_ZOOM: ${MIN_ZOOM}
-      MAX_ZOOM: ${MAX_ZOOM}
+      BBOX: "-11.3,48.8,3.5,61.5"
+      MIN_ZOOM: 0
+      MAX_ZOOM: 14
   postserve:
     image: "openmaptiles/postserve:0.2"
     env_file: .env
