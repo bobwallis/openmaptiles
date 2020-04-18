@@ -99,9 +99,9 @@ services:
       - postgres_conn
     env_file: .env
     environment:
-      BBOX: "-11.3,48.8,3.5,61.5"
-      MIN_ZOOM: 0
-      MAX_ZOOM: 14
+      BBOX: ${BBOX}
+      MIN_ZOOM: ${MIN_ZOOM}
+      MAX_ZOOM: ${MAX_ZOOM}
   postserve:
     image: "openmaptiles/openmaptiles-tools:${TOOLS_VERSION}"
     command: postserve openmaptiles.yaml --verbose
