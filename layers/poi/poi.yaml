@@ -73,7 +73,7 @@ layer:
         harbor:
           subclass: ['marina', 'dock']
         car:
-          subclass: ['car', 'car_repair', 'taxi']
+          subclass: ['car', 'car_repair', 'car_parts', 'taxi']
         hospital:
           subclass: ['hospital', 'nursing_home', 'clinic']
         cemetery:
@@ -150,7 +150,7 @@ schema:
   - ./poi_stop_agg.sql
   - ./update_poi_polygon.sql
   - ./update_poi_point.sql
-  - ./layer.sql
+  - ./poi.sql
 datasources:
   - type: imposm3
     mapping_file: ./mapping.yaml
